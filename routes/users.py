@@ -15,3 +15,5 @@ def create_user(user: users_schema.CreateUserRequest):
     storage.users_id += 1
     storage.users_list.append(new_user)
     return {"user": new_user}
+
+#test comment
