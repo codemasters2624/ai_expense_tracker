@@ -50,5 +50,7 @@ Thumbs.db
 # pyright / pylance
 .pyrightcache/
 
-# FastAPI / local dev
+# SQLite databases
+*.db
+*.sqlite
 *.sqlite3
