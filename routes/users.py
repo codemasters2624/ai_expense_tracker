@@ -5,7 +5,10 @@ from sqlalchemy.orm import Session
 from db.database import get_db
 from db.models import User
 
-router= APIRouter()
+router= APIRouter(
+    prefix="/users",
+    tags=["Users"]
+)
 
 @router.get("/get-all-users")
 def users(db: Session=Depends(get_db)):
@@ -15,7 +18,6 @@ def users(db: Session=Depends(get_db)):
         return {"message": "No users registered", "data": []}
     else:
         return {"data": users_list}
-    pass
 
 @router.post("/add-user")
 def create_user(user: users_schema.CreateUserRequest, db=Depends(get_db)):

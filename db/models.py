@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from db.database import Base
 
 class User(Base):
@@ -8,6 +8,9 @@ class User(Base):
     email = Column(String, nullable=False)
 
 class Expense(Base):
-    __tablename__ = "expense"
+    __tablename__ = "expenses"
     id= Column(Integer, primary_key=True, index=True)
-    desc=Column(String, nullable=False)
+    desc=Column(String)
+    amount=Column(Integer, nullable=False)
+    expense_date=Column(Date)
+    user_id=Column(Integer, ForeignKey("users.id"), nullable=False)
