@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
+from sqlalchemy.orm import relationship
 from db.database import Base
 
 class User(Base):
@@ -6,6 +7,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, primary_key=False, index=False, nullable=False)
     email = Column(String, nullable=False)
+    expense = relationship('Expense', back_populates="user")
 
 class Expense(Base):
     __tablename__ = "expenses"
@@ -14,3 +16,4 @@ class Expense(Base):
     amount=Column(Integer, nullable=False)
     expense_date=Column(Date)
     user_id=Column(Integer, ForeignKey("users.id"), nullable=False)
+    user = relationship('User', back_populates="expense")
