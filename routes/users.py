@@ -20,7 +20,7 @@ def users(db: Session=Depends(get_db)):
         return {"data": users_list}
 
 @router.post("/add-user")
-def create_user(user: users_schema.CreateUserRequest, db=Depends(get_db)):
+def create_user(user: users_schema.CreateUserRequest, db: Session = Depends(get_db)):
     new_user = User(name=user.name, email=user.email)
     db.add(new_user)
     db.commit()
@@ -31,7 +31,7 @@ def create_user(user: users_schema.CreateUserRequest, db=Depends(get_db)):
     
 
 @router.get("/get-user/{user_id}")
-def update_user(user_id: int, db: Session = Depends(get_db)):
+def get_user(user_id: int, db: Session = Depends(get_db)):
     user = (
                 db.query(User)
                 .filter(User.id == user_id)
