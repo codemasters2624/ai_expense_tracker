@@ -6,3 +6,4 @@ class GetExpensesRequest(BaseModel):
 class CreateExpenseRequest(BaseModel):
     amount: int
     desc: str
+    user_id: int

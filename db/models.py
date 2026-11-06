@@ -1,19 +1,35 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey
-from sqlalchemy.orm import relationship
+from datetime import date
+
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from db.database import Base
+
 
 class User(Base):
     __tablename__ = "users"
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, primary_key=False, index=False, nullable=False)
-    email = Column(String, nullable=False)
-    expense = relationship('Expense', back_populates="user")
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(nullable=False)
+    email: Mapped[str] = mapped_column(nullable=False)
+
+    expenses: Mapped[list["Expense"]] = relationship(
+        back_populates="user"
+    )
+
 
 class Expense(Base):
     __tablename__ = "expenses"
-    id= Column(Integer, primary_key=True, index=True)
-    desc=Column(String)
-    amount=Column(Integer, nullable=False)
-    expense_date=Column(Date)
-    user_id=Column(Integer, ForeignKey("users.id"), nullable=False)
-    user = relationship('User', back_populates="expense")
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    desc: Mapped[str | None] = mapped_column()
+    amount: Mapped[int] = mapped_column(nullable=False)
+    expense_date: Mapped[date | None] = mapped_column()
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id"),
+        nullable=False
+    )
+
+    user: Mapped["User"] = relationship(
+        back_populates="expenses"
+    )

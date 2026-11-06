@@ -10,6 +10,7 @@ router= APIRouter(
     tags=["Users"]
 )
 
+# Fetch all users in DB
 @router.get("/get-all-users")
 def users(db: Session=Depends(get_db)):
     users_list = db.query(User).all()
@@ -19,6 +20,7 @@ def users(db: Session=Depends(get_db)):
     else:
         return {"data": users_list}
 
+# Add a new single user in the DB
 @router.post("/add-user")
 def create_user(user: users_schema.CreateUserRequest, db: Session = Depends(get_db)):
     new_user = User(name=user.name, email=user.email)
@@ -29,7 +31,7 @@ def create_user(user: users_schema.CreateUserRequest, db: Session = Depends(get_
     return {"data": new_user}
     # User
     
-
+# Get deails of an individual user from DB
 @router.get("/get-user/{user_id}")
 def get_user(user_id: int, db: Session = Depends(get_db)):
     user = (
